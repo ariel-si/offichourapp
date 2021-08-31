@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:offichour_app/widget/controleWidget.dart';
+import 'package:offichour_app/widget/floatingBottomWidget.dart';
 import 'dart:async';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'package:offichour_app/widget/mapaWidget.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -9,80 +12,59 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  Completer<GoogleMapController> _ControllerMap = Completer();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("OfficHour"),
-      ),
-      body: Container(
-        child: GoogleMap(
-          zoomControlsEnabled: false,
-          mapType: MapType.normal,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(-23.503285, -46.642229),
-            zoom: 16
+        backgroundColor: Colors.amber,
+        centerTitle: false,
+        title: Text(
+          "OfficHour",
+          style: TextStyle(
+            color: Colors.black,
           ),
-          onMapCreated: (GoogleMapController controller){
-            _ControllerMap.complete(controller);
+        ),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+              onPressed: () { Scaffold.of(context).openDrawer(); },
+              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+            );
           },
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey[900],
-        child: Icon(Icons.play_arrow_rounded),
-        onPressed: () {},
-      ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          height: 80.0,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Ponto Registrado: ",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text("09:00"),
-                ],
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: const <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.amber,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Duração: ",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text("01:09:00"),
-                ],
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Local: ",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text("Rua Maria Curupaiti, 441"),
-                ],
-              )
-            ],
-          ),
+            ),
+            ListTile(
+              leading: Icon(Icons.message),
+              title: Text('Messages'),
+            ),
+            ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Profile'),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+          ],
         ),
       ),
+      body: MapaWidget(),
+      floatingActionButton: FloatingBottomWidget(),
+      bottomNavigationBar: ControleWidget(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }
