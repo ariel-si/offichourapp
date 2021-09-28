@@ -41,5 +41,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>O App Offichour precisa da sua localização para realizar o registro do ponto.</string>
 </dict>
 </plist>

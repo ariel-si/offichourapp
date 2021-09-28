@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:offichour_app/widget/controleWidget.dart';
 import 'package:offichour_app/widget/floatingBottomWidget.dart';
-import 'dart:async';
 
 import 'package:offichour_app/widget/mapaWidget.dart';
 
@@ -14,6 +13,36 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final drawerItems = ListView(
+      children: [
+        ListTile(
+          leading: Icon(Icons.alarm_add),
+          title: Text('Solicitar Correção'),
+          onTap: (){
+          }
+        ),
+        ListTile(
+          leading: Icon(Icons.add_box),
+          title: Text('Enviar Atestado'),
+        ),
+        ListTile(
+          leading: Icon(Icons.list),
+          title: Text('Historico'),
+        ),
+        ListTile(
+          leading: Icon(Icons.chat),
+          title: Text('Chat'),
+        ),
+        ListTile(
+          leading: Icon(Icons.settings),
+          title: Text('Configuração'),
+        ),
+        ListTile(
+          leading: Icon(Icons.power_settings_new),
+          title: Text('Sair'),
+        ),
+      ],
+    );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.amber,
@@ -24,42 +53,10 @@ class _HomeState extends State<Home> {
             color: Colors.black,
           ),
         ),
-        leading: Builder(
-          builder: (BuildContext context) {
-            return IconButton(
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black,
-              ),
-              onPressed: () { Scaffold.of(context).openDrawer(); },
-              tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-            );
-          },
-        ),
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: const <Widget>[
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.amber,
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Messages'),
-            ),
-            ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Profile'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-            ),
-          ],
-        ),
+        child: drawerItems,
+        elevation: 10,
       ),
       body: MapaWidget(),
       floatingActionButton: FloatingBottomWidget(),
