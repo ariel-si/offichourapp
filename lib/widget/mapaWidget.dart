@@ -11,14 +11,6 @@ class MapaWidget extends StatefulWidget {
 
 class _MapaWidgetState extends State<MapaWidget> {
 
-  _recupera() async {
-
-  }
-  @override
-  void initState(){
-
-  }
-
   @override
   Widget build(BuildContext context) {
 

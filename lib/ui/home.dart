@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offichour_app/ui/solicitarAjuste.dart';
 import 'package:offichour_app/widget/controleWidget.dart';
 import 'package:offichour_app/widget/floatingBottomWidget.dart';
 
@@ -19,27 +20,44 @@ class _HomeState extends State<Home> {
           leading: Icon(Icons.alarm_add),
           title: Text('Solicitar Correção'),
           onTap: (){
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context)=>SolicitarAjuste(),
+                )
+            );
           }
         ),
         ListTile(
           leading: Icon(Icons.add_box),
           title: Text('Enviar Atestado'),
+          onTap: (){
+          },
         ),
         ListTile(
           leading: Icon(Icons.list),
           title: Text('Historico'),
+          onTap: (){
+          },
         ),
         ListTile(
           leading: Icon(Icons.chat),
           title: Text('Chat'),
+          onTap: (){
+          },
         ),
         ListTile(
           leading: Icon(Icons.settings),
           title: Text('Configuração'),
+          onTap: (){
+          },
         ),
         ListTile(
           leading: Icon(Icons.power_settings_new),
           title: Text('Sair'),
+          onTap: (){
+          },
         ),
       ],
     );
