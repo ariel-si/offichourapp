@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:offichour_app/ui/solicitarAjuste.dart';
+import 'package:offichour_app/ui/telaHistorico.dart';
+import 'package:offichour_app/ui/telaSolicitarAjuste.dart';
 import 'package:offichour_app/widget/controleWidget.dart';
 import 'package:offichour_app/widget/floatingBottomWidget.dart';
 
@@ -24,7 +25,7 @@ class _HomeState extends State<Home> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context)=>SolicitarAjuste(),
+                  builder: (context)=>TelaSolicitarAjuste(),
                 )
             );
           }
@@ -39,6 +40,13 @@ class _HomeState extends State<Home> {
           leading: Icon(Icons.list),
           title: Text('Historico'),
           onTap: (){
+            Navigator.pop(context);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context)=>TelaHistorico(),
+                )
+            );
           },
         ),
         ListTile(

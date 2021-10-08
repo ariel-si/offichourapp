@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SolicitarAjuste extends StatelessWidget {
+class TelaSolicitarAjuste extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

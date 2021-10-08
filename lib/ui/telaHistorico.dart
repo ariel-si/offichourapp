@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
-class Historico extends StatefulWidget {
-  const Historico({Key? key}) : super(key: key);
-
+class TelaHistorico extends StatefulWidget {
   @override
-  _HistoricoState createState() => _HistoricoState();
+  _TelaHistoricoState createState() => _TelaHistoricoState();
 }
 
-class _HistoricoState extends State<Historico> {
+class _TelaHistoricoState extends State<TelaHistorico> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
