@@ -1,6 +1,6 @@
 # offichour_app
 
-A new Flutter application.
+Offichour, Aplicativo para a gestão de jornada de trabalho.
 
 ## Getting Started
 
