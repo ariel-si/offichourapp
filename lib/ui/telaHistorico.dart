@@ -13,7 +13,6 @@ class _TelaHistoricoState extends State<TelaHistorico> {
         title: Text("Historico"),
       ),
       body: Container(
-
       ),
     );
   }
