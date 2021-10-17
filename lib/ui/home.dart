@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:offichour_app/ui/telaHistorico.dart';
 import 'package:offichour_app/ui/telaSolicitarAjuste.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +24,79 @@ class _HomeState extends State<Home> {
   String _stopwatchText = '00:00:00';
   final _stopWatch = new Stopwatch();
   final _timeout = const Duration(seconds: 1);
+
+  Completer<GoogleMapController> _controllerMap = Completer();
+
+  _recuperaLocalizacaoAtual() async {
+    Position posicao = await Geolocator().getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    setState(() {
+      _position = CameraPosition(
+        target: LatLng(posicao.latitude, posicao.longitude),
+        zoom:18
+      );
+      _movimentarCamera();
+    });
+  }
+
+  _adicionarListenerlocalizacao(){
+    
+    var locationOptions = LocationOptions(
+      accuracy: LocationAccuracy.best,
+      distanceFilter: 15
+    );
+    Geolocator().getPositionStream(locationOptions).listen((Position position) {
+      setState(() {
+        _position = CameraPosition(
+            target: LatLng(position.latitude, position.longitude),
+            zoom:18
+        );
+        _recuperarLocalEndereco();
+        _movimentarCamera();
+      });
+    });
+
+  }
+
+  _recuperarLocalEndereco() async{
+
+    Position posicao = await Geolocator().getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    List<Placemark> listaEndereco = await Geolocator().placemarkFromCoordinates(posicao.latitude, posicao.longitude);
+    Placemark endereco = listaEndereco[0];
+
+    setState(() {
+      this.local = "${endereco.thoroughfare}, ${endereco.subThoroughfare}";
+    });
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _recuperaLocalizacaoAtual();
+    _adicionarListenerlocalizacao();
+
+
+  }
+
+  CameraPosition _position = CameraPosition(
+    target: LatLng(-23.503285, -46.642229),
+    zoom: 16,
+  );
+
+  _movimentarCamera() async{
+    GoogleMapController googleMapController = await _controllerMap.future;
+    googleMapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        _position
+      )
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +170,20 @@ class _HomeState extends State<Home> {
         child: drawerItems,
         elevation: 10,
       ),
-      body: MapaWidget(),
+      body: Container(
+        child: GoogleMap(
+
+          zoomControlsEnabled: false,
+          mapType: MapType.normal,
+          initialCameraPosition: _position,
+          onMapCreated: (GoogleMapController controller){
+            _controllerMap.complete(controller);
+          },
+          myLocationEnabled: true,
+          myLocationButtonEnabled: true,
+        ),
+      ),
+
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey[900],
         child: Icon(_isStart ? Icons.play_arrow : Icons.stop),
